@@ -1,0 +1,282 @@
+/* index.css */
+:root {
+  --primary: #5e81f4;
+  --primary-hover: #4a6cd4;
+  --background: #f0f2f6;
+  --surface: #ffffff;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666;
+  --border: #e0e4eb;
+  --shadow: 8px 8px 16px #d9dde3,
+    -8px -8px 16px #ffffff;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  --background: #1a1c1e;
+  --surface: #2d2f33;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a4ab;
+  --border: #3d4046;
+  --shadow: 8px 8px 16px #15171a,
+    -8px -8px 16px #25272a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  transition: var(--transition);
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.btn:hover {
+  color: var(--primary);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Navigation */
+.Nav {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  align-items: center;
+  position: relative;
+}
+
+.theme-toggle {
+  background: var(--surface);
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  color: var(--text-primary);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+/* Home/Columns layout */
+.Home {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+/* Columns */
+.Column {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: var(--transition);
+}
+
+
+.column-header {
+  position: relative;
+}
+
+.column-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.column-header button {
+  background: none !important;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+
+/* Tasks */
+.Task {
+  background: var(--background);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  transition: var(--transition);
+  cursor: grab;
+  border: 1px solid var(--border);
+}
+
+.Task:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.task-status {
+  color: red;
+  font-size: smaller;
+}
+
+
+/* Forms */
+.task-form,
+.column-form {
+  position: absolute;
+  top: 1rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--surface);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--background);
+  color: var(--text-primary);
+  transition: var(--transition);
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(94, 129, 244, 0.1);
+}
+
+button[type="submit"] {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 500;
+}
+
+button[type="submit"]:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* Utility classes */
+.flex {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  transition: var(--transition);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.Column {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Hover effects */
+.Column:hover {
+  transform: translateY(-2px);
+}
+
+/* Delete button */
+.delete-btn {
+  color: #ff4d4d;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+}
+
+.delete-btn:hover {
+  background: rgba(255, 77, 77, 0.1);
+}
+
+/* Add button */
+.add-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  display: grid;
+  place-items: center;
+}
+
+.add-btn:hover {
+  background: var(--primary-hover);
+  transform: scale(1.05);
+}
+
+/* Edit form */
+.edit-form {
+  background: var(--background);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
