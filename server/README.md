@@ -1,9 +1,10 @@
 ## Steps
-1) Migrate database:
+
+1. Migrate database:
    ```bash
-   go run migrate/migrate.go
+   go run migrations/migrate.go
    ```
-2) Run Command
+2. Run Command
    ```bash
-   go run main.go
+   go run cmd/api/main.go
    ```
