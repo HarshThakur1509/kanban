@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 export const Nav = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [showForm, setShowForm] = useState(false);
   const [newColumn, setNewColumn] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false); // State for mobile menu
   const API = "http://localhost:3000";
 
   useEffect(() => {
@@ -15,55 +17,66 @@ export const Nav = () => {
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setNewColumn((prev) => ({ ...prev, [name]: value }));
-  //   console.log(newColumn);
-  // };
-  const createColumn = async () => {
+
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
+
+  const createColumn = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post(`${API}/column`, {
-        name: newColumn,
-      });
+      const response = await axios.post(`${API}/column`, { name: newColumn });
       console.log("Column created:", response.data);
+      setShowForm(false);
+      setNewColumn("");
     } catch (error) {
       console.error("Error creating column:", error);
     }
   };
 
   return (
-    <div className="Nav">
-      {showForm ? (
-        <form onSubmit={createColumn} className="column-form">
-          <input
-            type="text"
-            name="Name"
-            placeholder="Name"
-            value={newColumn.Name}
-            onChange={(e) => {
-              setNewColumn(e.target.value);
-              console.log(newColumn);
-            }}
-            required
-          />
+    <nav className="Nav">
+      <button className="menu-toggle" onClick={toggleMenu}>
+        <span>☰</span>
+      </button>
 
-          <button type="submit">{showForm ? "Add Column" : "..."}</button>
-          <button
-            type="button"
-            className="btn"
-            onClick={() => setShowForm(false)}
-          >
-            Cancel
-          </button>
-        </form>
-      ) : (
-        <button onClick={() => setShowForm(true)} className="btn">
-          Add Column
-        </button>
-      )}
+      <div className={`nav-links ${menuOpen ? "open" : ""}`}>
+        <Link className="btn" to="/" onClick={() => setMenuOpen(false)}>
+          Home
+        </Link>
+        <Link className="btn" to="/deleted" onClick={() => setMenuOpen(false)}>
+          Deleted tasks
+        </Link>
+        <div className="form">
+          {showForm ? (
+            <form onSubmit={createColumn} className="column-form">
+              <input
+                type="text"
+                placeholder="Column Name"
+                value={newColumn}
+                onChange={(e) => setNewColumn(e.target.value)}
+                required
+              />
+              <button type="submit">Add</button>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => setShowForm(false)}
+              >
+                Cancel
+              </button>
+            </form>
+          ) : (
+            <button onClick={() => setShowForm(true)} className="btn">
+              Add Column
+            </button>
+          )}
+        </div>
+      </div>
+
       <button className="theme-toggle" onClick={toggleTheme}>
         {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
       </button>
-    </div>
+    </nav>
   );
 };

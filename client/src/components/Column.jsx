@@ -109,39 +109,40 @@ export const Column = ({ column, onDrop, tasks }) => {
           />
         </div>
       ))}
-
-      {showForm ? (
-        <form onSubmit={handleSubmit} className="task-form">
-          <input
-            type="text"
-            name="Title"
-            placeholder="Title"
-            value={newTask.Title}
-            onChange={handleInputChange}
-            required
-          />
-          <textarea
-            name="Description"
-            placeholder="Description"
-            value={newTask.Description}
-            onChange={handleInputChange}
-          />
-          <button type="submit" disabled={createTask.isPending}>
-            {createTask.isPending ? "Adding..." : "Add Task"}
+      <div className="form">
+        {showForm ? (
+          <form onSubmit={handleSubmit} className="task-form">
+            <input
+              type="text"
+              name="Title"
+              placeholder="Title"
+              value={newTask.Title}
+              onChange={handleInputChange}
+              required
+            />
+            <textarea
+              name="Description"
+              placeholder="Description"
+              value={newTask.Description}
+              onChange={handleInputChange}
+            />
+            <button type="submit" disabled={createTask.isPending}>
+              {createTask.isPending ? "Adding..." : "Add Task"}
+            </button>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => setShowForm(false)}
+            >
+              Cancel
+            </button>
+          </form>
+        ) : (
+          <button className="btn" onClick={() => setShowForm(true)}>
+            Add Task
           </button>
-          <button
-            type="button"
-            className="btn"
-            onClick={() => setShowForm(false)}
-          >
-            Cancel
-          </button>
-        </form>
-      ) : (
-        <button className="btn" onClick={() => setShowForm(true)}>
-          Add Task
-        </button>
-      )}
+        )}
+      </div>
     </div>
   );
 };

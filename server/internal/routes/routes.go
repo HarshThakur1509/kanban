@@ -23,10 +23,10 @@ func (s *ApiServer) Run() error {
 	router.HandleFunc("POST /column", handlers.PostColumn)
 	router.HandleFunc("POST /task", handlers.PostTask)
 	router.HandleFunc("GET /column", handlers.ListColumn)
+	router.HandleFunc("GET /deleted/task", handlers.ListDeletedTasks)
 	router.HandleFunc("PUT /task/{id}", handlers.ChangeStatus)
 	router.HandleFunc("DELETE /column/{id}", handlers.DeleteColumn)
 	router.HandleFunc("DELETE /task/{id}", handlers.DeleteTask)
-	router.HandleFunc("PUT /undo/column/{id}", handlers.UndoDeleteColumn)
 	router.HandleFunc("PUT /undo/task/{id}", handlers.UndoDeleteTask)
 
 	// Add code here

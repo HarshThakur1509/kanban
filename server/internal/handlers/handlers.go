@@ -61,6 +61,15 @@ func ListColumn(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(column)
 }
 
+func ListDeletedTasks(w http.ResponseWriter, r *http.Request) {
+	var task []models.Task
+	initializers.DB.Unscoped().Find(&task, "deleted_at IS NOT NULL")
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(task)
+}
+
 func ChangeStatus(w http.ResponseWriter, r *http.Request) {
 
 	id := r.PathValue("id")
@@ -120,9 +129,28 @@ func UndoDeleteTask(w http.ResponseWriter, r *http.Request) {
 	var task models.Task
 	initializers.DB.Unscoped().First(&task, id)
 	// if err != nil {
-	// 	http.Error(w, "Something went wrong!!", http.StatusBadRequest)
+	// 	http.Error(w, "Something went wrong while searching task!!", http.StatusBadRequest)
 	// 	return
 	// }
+
+	var column models.Column
+	initializers.DB.Unscoped().First(&column, task.ColumnID)
+	// if err != nil {
+	// 	http.Error(w, "Something went wrong while searching column!!", http.StatusBadRequest)
+	// 	return
+	// }
+
+	if (column.DeletedAt != gorm.DeletedAt{}) {
+
+		column.DeletedAt = gorm.DeletedAt{}
+
+		result := initializers.DB.Unscoped().Save(&column)
+		if result.Error != nil {
+			http.Error(w, "Failed to update deleted column", http.StatusBadRequest)
+			return
+		}
+
+	}
 
 	task.DeletedAt = gorm.DeletedAt{}
 
@@ -135,26 +163,4 @@ func UndoDeleteTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(task)
-}
-func UndoDeleteColumn(w http.ResponseWriter, r *http.Request) {
-	id := r.PathValue("id")
-
-	var column models.Column
-	err := initializers.DB.Unscoped().First(&column, id)
-	if err != nil {
-		http.Error(w, "Something went wrong!!", http.StatusBadRequest)
-		return
-	}
-
-	column.DeletedAt = gorm.DeletedAt{}
-
-	result := initializers.DB.Unscoped().Save(&column)
-	if result.Error != nil {
-		http.Error(w, "Failed to update deleted column", http.StatusBadRequest)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(column)
 }

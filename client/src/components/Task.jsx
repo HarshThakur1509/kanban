@@ -112,7 +112,7 @@ export const Task = ({ task, onDragStart }) => {
             <button
               type="button"
               onClick={handleCancel}
-              className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+              className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 btn"
             >
               Cancel
             </button>
