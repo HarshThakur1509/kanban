@@ -3,7 +3,7 @@ import axios from "axios";
 import { Column } from "./Column";
 
 export const Home = () => {
-  const API = "http://localhost:3000";
+  const API = "http://localhost/api";
   const queryClient = useQueryClient();
 
   const {

@@ -4,7 +4,7 @@ import { Task } from "./Task";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const Column = ({ column, onDrop, tasks }) => {
-  const API = "http://localhost:3000";
+  const API = "http://localhost/api";
   const queryClient = useQueryClient();
   const [showForm, setShowForm] = useState(false);
   const [newTask, setNewTask] = useState({ Title: "", Description: "" });

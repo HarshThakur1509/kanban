@@ -7,7 +7,7 @@ export const Nav = () => {
   const [showForm, setShowForm] = useState(false);
   const [newColumn, setNewColumn] = useState("");
   const [menuOpen, setMenuOpen] = useState(false); // State for mobile menu
-  const API = "http://localhost:3000";
+  const API = "http://localhost/api";
 
   useEffect(() => {
     document.body.setAttribute("data-theme", theme);

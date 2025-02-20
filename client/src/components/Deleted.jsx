@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 export const Deleted = () => {
-  const API = "http://localhost:3000";
+  const API = "http://localhost/api";
   const queryClient = useQueryClient();
 
   const {

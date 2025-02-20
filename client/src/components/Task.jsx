@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 export const Task = ({ task, onDragStart }) => {
-  const API = "http://localhost:3000";
+  const API = "http://localhost/api";
   const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.Title);
