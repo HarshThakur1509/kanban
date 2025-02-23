@@ -75,7 +75,7 @@ export const Nav = () => {
       </div>
 
       <button className="theme-toggle" onClick={toggleTheme}>
-        {theme === "light" ? "🌙 Dark Mode" : "☀️ Light Mode"}
+        {theme === "light" ? "🌙" : "☀️"}
       </button>
     </nav>
   );
